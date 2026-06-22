@@ -6,6 +6,6 @@ on:
 
 jobs:
   build:
-    runs-on: mac-os
+    runs-on: mac-os2
     steps:
       - run: echo "Hello, world!"
