@@ -6,6 +6,6 @@ on:
 
 jobs:
   build:
-    runs-on: mac-os2
+    runs-on: label-t1
     steps:
       - run: echo "Hello, world!"
