@@ -18,4 +18,4 @@ jobs:
   prod:
     runs-on: label-t3
     steps:
-      - run: echo "Running prod..."
+      - run: echo "Running prod2..."
