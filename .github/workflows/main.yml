@@ -13,7 +13,7 @@ jobs:
   test:
     runs-on: label-t2
     steps:
-      - run: echo "Running tests..."
+      - run: echo "Running tests2..."
 
   prod:
     runs-on: label-t3
