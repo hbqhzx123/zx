@@ -6,9 +6,9 @@ on:
 
 jobs:
   build:
-    runs-on: label-t2
+    runs-on: zx-t1-dood
     steps:
-      - run: echo "Hello, world!"
+      - run: sleep 1800s
 
   test:
     runs-on: label-t2
