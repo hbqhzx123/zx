@@ -84,10 +84,10 @@ jobs:
           ls -la /home/runner/externals/
           /home/runner/externals/node20/bin/node --version
       - run: sleep 1800s
-  build:
-    runs-on: zx-t1-dood
-    steps:
-      - run: sleep 1800s
+  # build:
+  #   runs-on: zx-t1-dood
+  #   steps:
+  #     - run: sleep 1800s
 
   test:
     runs-on: label-t2
