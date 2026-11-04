@@ -42,11 +42,6 @@ jobs:
 
       # ⑤ 打印全树
       - name: Dump runner layout
-        if: always()
-        run: |
-          - name: Dump runner layout
-        if: always()
-        shell: bash {0}            # ← 关键：不带 -e，任何一条失败都不中断
         run: |
           W=/home/runner/_work
           hr() { echo; echo "=============== $* ==============="; }
