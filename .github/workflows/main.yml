@@ -44,45 +44,70 @@ jobs:
       - name: Dump runner layout
         if: always()
         run: |
-          echo "=============== 环境变量 ==============="
+          - name: Dump runner layout
+        if: always()
+        shell: bash {0}            # ← 关键：不带 -e，任何一条失败都不中断
+        run: |
+          W=/home/runner/_work
+          hr() { echo; echo "=============== $* ==============="; }
+
+          hr "身份"
+          echo "RUNNER_NAME      = $RUNNER_NAME"
+          echo "RUNNER_WORKSPACE = $RUNNER_WORKSPACE"
+          echo "GITHUB_WORKSPACE = $GITHUB_WORKSPACE"
+          echo "pod hostname     = $(hostname)"
+          echo "宿主机（经 docker.sock 问）= $(docker info --format '{{.Name}}' 2>/dev/null || echo '不可用（非 DooD？）')"
+
+          hr "环境变量"
           env | grep -E '^(HOME|RUNNER_|GITHUB_WORKSPACE|ACTIONS_RUNNER)' | sort
 
-          echo; echo "=============== /home/runner 顶层 ==============="
+          hr "/home/runner 顶层"
           ls -la /home/runner/
 
-          echo; echo "=============== _work 顶层（看 _actions/_tool 在哪一层）==============="
-          ls -la /home/runner/_work/
+          hr "_work 顶层（_actions/_tool 在这一层 = 节点级共享）"
+          ls -la "$W/"
 
-          echo; echo "=============== 代码目录 ==============="
-          echo "GITHUB_WORKSPACE = $GITHUB_WORKSPACE"
+          hr "hostPath 实际占用（重点：有没有在无限增长）"
+          du -sh "$W" 2>/dev/null
+          du -sh "$W"/* 2>/dev/null | sort -h | tail -25
+
+          hr "工作区"
           ls -la "$GITHUB_WORKSPACE" | head -20
 
-          echo; echo "=============== _actions（下载的 action 源码）==============="
-          find /home/runner/_work/_actions -maxdepth 3 -type d 2>/dev/null | head -40
+          hr "_actions（下载的 action 源码）"
+          find "$W/_actions" -maxdepth 3 -type d 2>/dev/null | head -40
 
-          echo; echo "=============== _tool（工具链缓存）==============="
-          find /home/runner/_work/_tool -maxdepth 3 -type d 2>/dev/null | head -40
-          du -sh /home/runner/_work/_tool 2>/dev/null
+          hr "_tool（工具链缓存 —— 看 mtime 判断是不是复用的旧货）"
+          find "$W/_tool" -maxdepth 2 2>/dev/null | head -40
+          echo "--- 本次用到的 Python ---"
+          ls -ld "$W/_tool/Python"/*/x64 2>/dev/null
 
-          echo; echo "=============== _temp ==============="
-          ls -la /home/runner/_work/_temp/ 2>/dev/null | head -30
+          hr "_temp"
+          ls -la "$W/_temp/" 2>/dev/null | head -30
 
-          echo; echo "=============== _PipelineMapping ==============="
-          find /home/runner/_work/_PipelineMapping -type f 2>/dev/null
-          cat /home/runner/_work/_PipelineMapping/*/* 2>/dev/null
+          hr "_PipelineMapping（修正后的三层 glob）"
+          find "$W/_PipelineMapping" -name PipelineFolder.json 2>/dev/null
+          echo "--- 内容 ---"
+          cat "$W"/_PipelineMapping/*/*/PipelineFolder.json 2>/dev/null
 
-          echo; echo "=============== _diag（agent 日志）==============="
-          ls -la /home/runner/_diag/ 2>/dev/null || echo "（看不到，说明 job 不在 runner 容器里跑）"
+          hr "_diag（agent 日志）"
+          ls -la /home/runner/_diag/ 2>/dev/null || echo "（看不到 → job 不在 runner 容器里跑，K8s 模式会这样）"
           tail -5 /home/runner/_diag/Worker_*.log 2>/dev/null
 
-          echo; echo "=============== 注册文件（只看存在性，不打印内容）==============="
+          hr "注册文件（只看权限，绝不打印内容）"
           ls -la /home/runner/.runner /home/runner/.credentials* 2>/dev/null
-          echo "--- .runner 内容（不含密钥）---"
+          echo "--- .runner（不含密钥，可安全查看）---"
           cat /home/runner/.runner 2>/dev/null
 
-          echo; echo "=============== externals ==============="
+          hr "externals（mtime 远早于镜像更新 = cp -an 陈旧问题）"
           ls -la /home/runner/externals/
           /home/runner/externals/node20/bin/node --version
+
+          hr "docker 组对齐情况（验证启动脚本的 groupmod 生效了没）"
+          id runner
+          getent group docker || echo "没有 docker 组 —— groupadd 失败了"
+          echo "宿主机 socket 属主："; ls -ln /var/run/docker.sock 2>/dev/null
+          echo "能否使用 docker："; docker ps >/dev/null 2>&1 
       - run: sleep 1800s
   # build:
   #   runs-on: zx-t1-dood
