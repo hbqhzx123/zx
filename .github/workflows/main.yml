@@ -5,8 +5,46 @@ on:
     branches: [ main ]
 
 jobs:
+  train:
+    runs-on: zx-t1-dood
+    container:
+      image: harbor.baai.ac.cn/library/pytorch:22.08-sshd
+      env:
+        API_KEY: sssssshhhhhhh
+      options: --user root --shm-size 8g  # 见下面的白名单说明
+    defaults:
+      run:
+        shell: bash                      # container job 默认是 sh，不是 bash
+
+    steps:
+      - uses: actions/checkout@v4         # 代码挂到容器里的 /__w
+
+      - name: 环境自检
+        run: |
+          echo "谁在跑: $(id)"
+          echo "工作区: $GITHUB_WORKSPACE"
+          echo "HOME:   $HOME"
+          python -V
+          python -c "import torch; print('torch', torch.__version__)"
+
+      - name: 跑点 python
+        run: |
+          python -c "print(sum(i*i for i in range(1000)))"
+          python - <<'PY'
+          import torch
+          print("torch", torch.__version__)
+          print("cuda:", torch.cuda.is_available())
+          if torch.cuda.is_available():
+              print("device:", torch.cuda.get_device_name(0))
+              print("2x2 @ gpu:", (torch.ones(2,2,device='cuda') @ torch.ones(2,2,device='cuda')))
+          PY
+
+      - name: 挂载点长什么样
+        run: |
+          echo "workspace = $GITHUB_WORKSPACE"
+          ls -la /__w /__e /github 2>/dev/null || true
   probe:
-    runs-on: zx-t1-dood          # ← 换成你们的 runnerScaleSetName
+    runs-on: zx-t1-dood-2          # ← 换成你们的 runnerScaleSetName
     steps:
       # ① _actions/  +  _work/<repo>/<repo>/
       - name: Checkout
@@ -104,10 +142,10 @@ jobs:
           echo "宿主机 socket 属主："; ls -ln /var/run/docker.sock 2>/dev/null
           echo "能否使用 docker："; docker ps >/dev/null 2>&1 
       - run: sleep 1800s
-  # build:
-  #   runs-on: zx-t1-dood
-  #   steps:
-  #     - run: sleep 1800s
+  build:
+    runs-on: zx-t1-dood-3
+    steps:
+      - run: sleep 1800s
 
   test:
     runs-on: label-t2
