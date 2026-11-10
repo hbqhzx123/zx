@@ -6,7 +6,7 @@ on:
 
 jobs:
   train:
-    runs-on: zx-t1-dood
+    runs-on: zx-test-dind
     container:
       image: harbor.baai.ac.cn/library/pytorch:22.08-sshd
       env:
