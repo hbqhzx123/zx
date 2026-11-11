@@ -14,7 +14,7 @@ jobs:
         http_proxy: ${{ secrets.http_proxy }}
         https_proxy: ${{ secrets.http_proxy }}
         no_proxy: localhost,127.0.0.1,harbor.baai.ac.cn,mirrors.aliyun.com
-      options: --user root --shm-size 8g  # 见下面的白名单说明
+      options: --user root --shm-size 8g  --network host # 见下面的白名单说明
     defaults:
       run:
         shell: bash                      # container job 默认是 sh，不是 bash
