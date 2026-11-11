@@ -20,10 +20,6 @@ jobs:
         shell: bash                      # container job 默认是 sh，不是 bash
 
     steps:
-      - name: 卡住，等我进去看
-        run: |
-          echo "container id = $(hostname)"
-          sleep 21600        # 6 小时
       - uses: actions/checkout@v4         # 代码挂到容器里的 /__w
 
       - name: 环境自检
