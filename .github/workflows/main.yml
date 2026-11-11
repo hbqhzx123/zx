@@ -8,7 +8,7 @@ jobs:
   train:
     runs-on: zx-test-dind
     container:
-      image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-dockercli:v0.1
+      image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-dockercli-git:v0.1
       env:
         API_KEY: sssssshhhhhhh
         http_proxy: ${{ secrets.http_proxy }}
