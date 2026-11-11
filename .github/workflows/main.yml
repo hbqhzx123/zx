@@ -6,15 +6,11 @@ on:
 
 jobs:
   train:
-    runs-on: zx-test-dind
-    # container:
-    #   image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-dockercli-git:v0.1
-    #   env:
-    #     API_KEY: sssssshhhhhhh
-    #     http_proxy: ${{ secrets.http_proxy }}
-    #     https_proxy: ${{ secrets.http_proxy }}
-    #     no_proxy: localhost,127.0.0.1,harbor.baai.ac.cn,mirrors.aliyun.com
-    #   options: --user root --shm-size 8g # 见下面的白名单说明
+    runs-on: zx-test-k8s
+    container:
+      image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
+      env:
+        API_KEY: sssssshhhhhhh
     defaults:
       run:
         shell: bash                      # container job 默认是 sh，不是 bash
@@ -46,6 +42,7 @@ jobs:
         run: |
           echo "workspace = $GITHUB_WORKSPACE"
           ls -la /__w /__e /github 2>/dev/null || true
+      
   probe:
     runs-on: zx-t1-dood-2          # ← 换成你们的 runnerScaleSetName
     steps:
@@ -144,7 +141,7 @@ jobs:
           getent group docker || echo "没有 docker 组 —— groupadd 失败了"
           echo "宿主机 socket 属主："; ls -ln /var/run/docker.sock 2>/dev/null
           echo "能否使用 docker："; docker ps >/dev/null 2>&1 
-      - run: sleep 1800s
+      - run: sleep 3600s
   build:
     runs-on: zx-t1-dood-3
     steps:
