@@ -45,6 +45,13 @@ jobs:
       
   probe:
     runs-on: zx-test-k8s         # ← 换成你们的 runnerScaleSetName
+    container:
+      image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
+      env:
+        API_KEY: sssssshhhhhhh
+    defaults:
+      run:
+        shell: bash                      # container job 默认是 sh，不是 bash
     steps:
       # ① _actions/  +  _work/<repo>/<repo>/
       - name: Checkout
