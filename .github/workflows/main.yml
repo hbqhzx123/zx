@@ -8,7 +8,7 @@ jobs:
   train:
     runs-on: zx-test-dind
     container:
-      image: harbor.baai.ac.cn/baai-infra/actions-runner:ubuntu-22.04
+      image: harbor.baai.ac.cn/flagos-lab/ts-op-trainning-compatible:v0.4
       env:
         API_KEY: sssssshhhhhhh
         http_proxy: ${{ secrets.http_proxy }}
@@ -20,6 +20,10 @@ jobs:
         shell: bash                      # container job 默认是 sh，不是 bash
 
     steps:
+      - name: 卡住，等我进去看
+        run: |
+          echo "container id = $(hostname)"
+          sleep 21600        # 6 小时
       - uses: actions/checkout@v4         # 代码挂到容器里的 /__w
 
       - name: 环境自检
