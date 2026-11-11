@@ -20,6 +20,11 @@ jobs:
         shell: bash                      # container job 默认是 sh，不是 bash
 
     steps:
+      - name: diagnose egress
+        run: |
+          echo "https_proxy=${https_proxy:+SET}${https_proxy:-EMPTY}"
+          echo "http_proxy=${http_proxy:+SET}${http_proxy:-EMPTY}"
+          GIT_CURL_VERBOSE=1 git ls-remote https://github.com/hbqhzx123/zx 2>&1 | head -40
       - uses: actions/checkout@v4         # 代码挂到容器里的 /__w
 
       - name: 环境自检
