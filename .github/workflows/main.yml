@@ -8,13 +8,13 @@ jobs:
   train:
     runs-on: zx-test-dind
     container:
-      image: harbor.baai.ac.cn/flagos-lab/ts-op-trainning-compatible:v0.4
+      image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-dockercli:v0.1
       env:
         API_KEY: sssssshhhhhhh
         http_proxy: ${{ secrets.http_proxy }}
         https_proxy: ${{ secrets.http_proxy }}
         no_proxy: localhost,127.0.0.1,harbor.baai.ac.cn,mirrors.aliyun.com
-      options: --user root --shm-size 8g  --network host # 见下面的白名单说明
+      options: --user root --shm-size 8g # 见下面的白名单说明
     defaults:
       run:
         shell: bash                      # container job 默认是 sh，不是 bash
