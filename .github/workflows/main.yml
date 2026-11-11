@@ -27,8 +27,8 @@ jobs:
           echo "谁在跑: $(id)"
           echo "工作区: $GITHUB_WORKSPACE"
           echo "HOME:   $HOME"
-          python -V
-          python -c "import torch; print('torch', torch.__version__)"
+          python3 -V
+          python3 -c "import torch; print('torch', torch.__version__)"
 
       - name: 跑点 python
         run: |
