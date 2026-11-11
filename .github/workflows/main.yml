@@ -32,8 +32,8 @@ jobs:
 
       - name: 跑点 python
         run: |
-          python -c "print(sum(i*i for i in range(1000)))"
-          python - <<'PY'
+          python3 -c "print(sum(i*i for i in range(1000)))"
+          python3 - <<'PY'
           import torch
           print("torch", torch.__version__)
           print("cuda:", torch.cuda.is_available())
