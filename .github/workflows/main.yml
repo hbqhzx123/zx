@@ -6,7 +6,7 @@ on:
 
 jobs:
   train:
-    runs-on: zx-test-k8s
+    runs-on: zx-test-k8s-2
     container:
       image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
       env:
@@ -44,7 +44,7 @@ jobs:
           ls -la /__w /__e /github 2>/dev/null || true
       
   probe:
-    runs-on: zx-t1-dood-2          # ← 换成你们的 runnerScaleSetName
+    runs-on: zx-test-k8s         # ← 换成你们的 runnerScaleSetName
     steps:
       # ① _actions/  +  _work/<repo>/<repo>/
       - name: Checkout
