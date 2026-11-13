@@ -49,6 +49,8 @@ jobs:
       image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
       env:
         API_KEY: sssssshhhhhhh
+        PIP_INDEX_URL: https://mirrors.aliyun.com/pypi/simple/
+        PIP_TRUSTED_HOST: mirrors.aliyun.com
     defaults:
       run:
         shell: bash                      # container job 默认是 sh，不是 bash
