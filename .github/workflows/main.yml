@@ -5,66 +5,6 @@ on:
     branches: [ main ]
 
 jobs:
-  train:
-    runs-on: zx-test-k8s
-    container:
-      image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
-      env:
-        API_KEY: sssssshhhhhhh
-    defaults:
-      run:
-        shell: bash                      # container job 默认是 sh，不是 bash
-
-    steps:
-      - uses: actions/checkout@v4         # 代码挂到容器里的 /__w
-
-      - name: 环境自检
-        run: sleep 3600s
-      
-  probe:
-    runs-on: zx-k8s-test-dx6-0        # ← 换成你们的 runnerScaleSetName
-    container:
-      image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
-      env:
-        API_KEY: sssssshhhhhhh
-        PIP_INDEX_URL: https://mirrors.aliyun.com/pypi/simple/
-        PIP_TRUSTED_HOST: mirrors.aliyun.com
-    defaults:
-      run:
-        shell: bash                      # container job 默认是 sh，不是 bash
-    steps:
-      # ① _actions/  +  _work/<repo>/<repo>/
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      # ② _tool/  （setup-* 把工具链装进工具缓存）
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      # ③ _actions/ 再多一个（JS action，验证 externals/node20 在被用）
-      - name: JS action
-        uses: actions/github-script@v7
-        with:
-          script: core.info('hello from node')
-
-      # ④ _temp/  （环境文件、输出文件、step summary 都落在这里）
-      - name: Touch temp files
-        id: vars
-        run: |
-          echo "MY_VAR=hello"  >> "$GITHUB_ENV"
-          echo "my_out=world"  >> "$GITHUB_OUTPUT"
-          echo "### probe ran" >> "$GITHUB_STEP_SUMMARY"
-          echo "GITHUB_ENV    = $GITHUB_ENV"
-          echo "GITHUB_OUTPUT = $GITHUB_OUTPUT"
-          echo "GITHUB_STEP_SUMMARY = $GITHUB_STEP_SUMMARY"
-          
   job1:
     runs-on: zx-k8s-test-dx6
     container:
