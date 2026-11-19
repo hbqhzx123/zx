@@ -6,7 +6,7 @@ on:
 
 jobs:
   job1:
-    runs-on: zx-k8s-test-dx6
+    runs-on: zx-test-k8s-dx6
     container:
       image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
       env:
@@ -18,7 +18,7 @@ jobs:
       - run: sleep 1800s
 
   job2:
-    runs-on: zx-k8s-test-dx6-2
+    runs-on: zx-test-k8s-dx6-2
     container:
       image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
       env:
@@ -30,7 +30,7 @@ jobs:
       - run: sleep 1800s"
 
   job3:
-    runs-on: zx-k8s-test-dx6-3
+    runs-on: zx-test-k8s-dx6-3
     container:
       image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
       env:
