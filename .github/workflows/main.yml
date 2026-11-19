@@ -44,7 +44,7 @@ jobs:
           ls -la /__w /__e /github 2>/dev/null || true
       
   probe:
-    runs-on: zx-test-k8s         # ← 换成你们的 runnerScaleSetName
+    runs-on: zx-k8s-test-dx6        # ← 换成你们的 runnerScaleSetName
     container:
       image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
       env:
@@ -150,7 +150,7 @@ jobs:
       #     getent group docker || echo "没有 docker 组 —— groupadd 失败了"
       #     echo "宿主机 socket 属主："; ls -ln /var/run/docker.sock 2>/dev/null
       #     echo "能否使用 docker："; docker ps >/dev/null 2>&1 
-      - run: sleep 3600s
+      # - run: sleep 3600s
   build:
     runs-on: zx-t1-dood-3
     steps:
