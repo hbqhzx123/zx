@@ -27,7 +27,7 @@ jobs:
       run:
         shell: bash                      # container job 默认是 sh，不是 bash
     steps:
-      - run: sleep 1800s"
+      - run: sleep 1800s
 
   job3:
     runs-on: zx-test-k8s-dx6-3
@@ -39,4 +39,4 @@ jobs:
       run:
         shell: bash                      # container job 默认是 sh，不是 bash
     steps:
-      - run: sleep 1800s"
+      - run: sleep 1800s
