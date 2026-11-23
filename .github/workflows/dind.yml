@@ -1,0 +1,11 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  job1:
+    runs-on: zx-test-dind-dx6
+    steps:
+      - run: sleep 120s
