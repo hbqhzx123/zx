@@ -2,10 +2,22 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ dind ]
 
 jobs:
   job1:
     runs-on: zx-test-dind-dx6
+    steps:
+      - run: sleep 120s
+  job2:
+    runs-on: zx-test-dind-dx6-2
+    steps:
+      - run: sleep 120s
+  job3:
+    runs-on: zx-test-dind-dx6
+    steps:
+      - run: sleep 120s
+  job4:
+    runs-on: zx-test-dind-dx6-2
     steps:
       - run: sleep 120s
