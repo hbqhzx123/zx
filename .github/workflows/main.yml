@@ -2,34 +2,11 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ mixed ]
 
 jobs:
   job1:
-    runs-on: zx-test-k8s-dx6
-    container:
-      image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
-      env:
-        API_KEY: sssssshhhhhhh
-    defaults:
-      run:
-        shell: bash                      # container job 默认是 sh，不是 bash
-    steps:
-      - run: sleep 120s
-  job1-2:
-    runs-on: zx-test-k8s-dx6
-    container:
-      image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
-      env:
-        API_KEY: sssssshhhhhhh
-    defaults:
-      run:
-        shell: bash                      # container job 默认是 sh，不是 bash
-    steps:
-      - run: sleep 120s
-  
-  job4-1:
-    runs-on: zx-test-k8s-dx6-4
+    runs-on: zx-test-k8s-dx6-6
     container:
       image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
       env:
@@ -40,8 +17,8 @@ jobs:
     steps:
       - run: sleep 120s
 
-  job4-2:
-    runs-on: zx-test-k8s-dx6-4
+  job2:
+    runs-on: zx-test-dood-dx6-3
     container:
       image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
       env:
@@ -49,5 +26,9 @@ jobs:
     defaults:
       run:
         shell: bash                      # container job 默认是 sh，不是 bash
+    steps:
+      - run: sleep 120s
+  job3:
+    runs-on: zx-test-dind-dx6-3
     steps:
       - run: sleep 120s
