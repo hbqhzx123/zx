@@ -18,7 +18,7 @@ jobs:
       - run: sleep 120s
 
   job2:
-    runs-on: zx-test-dood-dx6-6
+    runs-on: zx-test-k8s-dx6-6
     container:
       image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
       env:
