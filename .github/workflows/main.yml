@@ -28,6 +28,17 @@ jobs:
         shell: bash                      # container job 默认是 sh，不是 bash
     steps:
       - run: sleep 120s
+  job3:
+    runs-on: zx-test-k8s-dx6-6
+    container:
+      image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
+      env:
+        API_KEY: sssssshhhhhhh
+    defaults:
+      run:
+        shell: bash                      # container job 默认是 sh，不是 bash
+    steps:
+      - run: sleep 120s
   # job3:
   #   runs-on: zx-test-dind-dx6-3
   #   steps:
