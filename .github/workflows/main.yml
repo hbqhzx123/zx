@@ -6,7 +6,7 @@ on:
 
 jobs:
   job1:
-    runs-on: zx-t1-dood
+    runs-on: zx-test-dood
     container:
       image: harbor.baai.ac.cn/flagos-lab/ubuntu-22-04-toolbox:v0.1
       env:
